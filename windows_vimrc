@@ -1,0 +1,193 @@
+set nocompatible
+let $LANG = 'en'	"set message language
+"set langmenu = 'en' "
+source $VIMRUNTIME/vimrc_example.vim
+
+set number
+"set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+let mapleader =";"
+set number
+syntax on
+set norelativenumber
+set cursorline
+set wrap
+set showcmd
+set wildmenu
+noremap K 5k
+noremap J 5j
+
+noremap <Leader>q :q<CR>
+noremap <Leader>Q :q!<CR>
+noremap <Leader>w :w<CR>
+
+
+
+"noremap <leader>t :NERDTreeToggle<CR>
+"noremap <leader>t :<C-t>
+noremap <leader>n :<C-n>
+noremap <Leader>t :NERDTreeToggle<CR>
+"map <C-n> :NERDTreeToggle
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+
+set hlsearch
+exec "nohlsearch"
+set incsearch
+set ignorecase
+set smartcase
+
+noremap <LEADER><CR> :nohlsearch<CR>
+
+map s <nop>
+map S :w<CR>
+map Q :q<CR>
+map R :source ~/.vimrc<CR>
+
+map <LEADER>sl :set splitright<CR>:vsplit<CR>
+map <LEADER>sh :set nosplitright<CR>:vsplit<CR>
+map <LEADER>sk :set nosplitbelow<CR>:split<CR>
+map <LEADER>sj :set splitbelow<CR>:split<CR>
+
+map <LEADER><LEADER>l <C-w>l
+map <LEADER><LEADER>k <C-w>k
+map <LEADER><LEADER>h <C-w>h
+map <LEADER><LEADER>j <C-w>j
+
+"map <up> :res +5<CR>
+"map <down> :res -5<CR>
+"map <left> :vertical size-5<CR>
+"map <right> :vertical size+5<CR>
+"
+let g:ycm_language_server = 
+  \ [ 
+  \   {
+  \     'name': 'yaml',
+  \     'cmdline': [ '/path/to/yaml/server/yaml-language-server', '--stdio' ],
+  \     'filetypes': [ 'yaml' ]
+  \   },
+  \   {
+  \     'name': 'rust',
+  \     'cmdline': [ 'ra_lsp_server' ],
+  \     'filetypes': [ 'rust' ],
+  \     'project_root_files': [ 'Cargo.toml' ]
+  \   },
+  \   {
+  \     'name': 'godot',
+  \     'filetypes': [ 'gdscript' ],
+  \     'port': 6008,
+  \     'project_root_files': [ 'project.godot' ]
+  \    }
+  \ ]
+
+
+
+"///*** Vundle ***/// Starting
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+"set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=C:\Users\LOSTBoundary\vimfiles\bundle\Vundle.Vim
+"$VIM/vimfiles/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+"
+" /*****************************************************************************/
+" /*****************************************************************************/
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'preservim/nerdtree'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'preservim/nerdcommenter'
+"Plugin `neocomplcache`
+""安装插件
+Plugin 'godlygeek/tabular' "必要插件，安装在vim-markdown前面
+Plugin 'plasticboy/vim-markdown'
+Plugin 'mzlogin/vim-markdown-toc'
+" 安装插件
+Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'Valloric/YouCompleteMe'
+
+" /*****************************************************************************/
+" /*****************************************************************************/
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"
+"
+"
+
+au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
+au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
+
+"""neocompl"""
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_min_keyword_length = 3 " 从第三个字符开始语法提示
+let g:neocomplcache_enable_smart_case = 1" 区分大小写
+let g:vim_markdown_math = 1
+
+"在当前光标后生成目录
+":GenTocMarked
+""更新目录
+ ":UpdateToc
+"取消储存时自动更新目录
+"let g:vmt_auto_update_on_save = 0"
+function RToc()
+	    exe "/-toc .* -->"
+	        let lstart=line('.')
+		    exe "/-toc -->"
+		        let lnum=line('.')
+			    execute lstart.",".lnum."g/           /d"
+endfunction
+
+" 打开/关闭预览
+" :MarkdownPreviewToggel
+" " 指定浏览器路径
+ let g:mkdp_path_to_chrome = "C:\Program Files\Google\Chrom\Application" 
+"Files\Google\Chrome\Application"" 
+" " 指定预览主题，默认Github
+ let g:mkdp_markdown_css=''"
+" "
+" 
+
+" 启用YCM基本功能
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_seed_identifiers_with_syntax = 1
+  
+" 启用C family语言的补全
+let g:ycm_language_servers = {
+  \ 'c': ['ccls'],
+    \ 'cpp': ['ccls'],
+      \ }
